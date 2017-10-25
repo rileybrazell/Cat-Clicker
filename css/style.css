@@ -1,8 +1,29 @@
 .container {
     background-color: #413D3E;
-    max-width: 500px;
     margin: auto;
     color: #ffffff;
     border: 3px solid #84888E;
     border-radius: 4px;
+}
+
+.header {
+    text-align: center;
+}
+
+.panel {
+    border: 2px solid #ffffff;
+    padding: 5px;
+    margin: 2px;
+    text-align: center;
+}
+
+#cat-list {
+    text-align: left;
+    list-style-type: none;
+    font-weight: bold;
+}
+
+#cat-count{
+    font-size: 20pt;
+    font-weight: bold;
 }

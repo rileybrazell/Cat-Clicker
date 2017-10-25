@@ -11,10 +11,26 @@
 <body>
     <div class="container">
         <div class="header"><h1>Cat Clicker</h1></div>
-        <div class="panel" id="cat-list">List of Cats</div>
-        <div class="panel" id="cat-image">Cat picture and count</div>
-        <div class="panel" id="cat-info">list of info</div>
+        <div class="panel">
+            <ul id="cat-list"></ul>
+        </div>
+        <div class="panel" id="cat-panel">
+            <h2 id="cat-name"></h2>
+            <img id="cat-image" src="">
+            <div id="cat-count"></div>
+        </div>
+        <div class="panel" id="cat-info">
+            <!-- <form>
+                Name: <input type="text" id="input-name">
+                <br>
+                Image Source: <input type="text" id="input-image">
+                <br>
+                <button type="button" id="button-cancel">Cancel</button>
+                <button type="button" id="button-submit">Submit</button>
+            </form> -->
+        </div>
     </div>
 
+    <script src="js/jquery.min.js"></script>
     <script src="js/script.js"></script>
 </body>
