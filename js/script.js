@@ -1,5 +1,6 @@
 
 $(function(){
+    // Hold data for cats
     var model = {
         currentCat: null,
         cats: [
@@ -66,6 +67,8 @@ $(function(){
             return name, source, count;
         },
 
+        // Accepts input from form elements, sets the current cat's
+        // information to the information from form
         setCatInfo: function(name, source, count) {
             this.name = name;
             this.source = source;
@@ -82,6 +85,23 @@ $(function(){
 
             view_list.render();
             view_panel.render();
+            view_admin.render();
+
+            this.togglePanel();
+        },
+
+        togglePanel: function() {
+            var infoForm = document.getElementById('info-form');
+            var adminButton = document.getElementById('button-admin');
+
+            if (infoForm.style.display == 'none'){
+                adminButton.style.display = 'none';
+                infoForm.style.display = 'inline-block';
+            }
+            else if (infoForm.style.display == 'inline-block'){
+                adminButton.style.display = 'inline-block';
+                infoForm.style.display = 'none';
+            }
         }
     };
 
@@ -108,6 +128,8 @@ $(function(){
                     return function() {
                         octopus.setCurrentCat(cat);
                         view_panel.render();
+                        view_admin.render();
+                        octopus.togglePanel();
                     };
                 })(cat));
 
@@ -141,25 +163,21 @@ $(function(){
 
     var view_admin = {
         init: function() {
-            this.infoPanel = document.getElementById('cat-info');
             var infoForm = document.getElementById('info-form');
             var adminButton = document.getElementById('button-admin');
+            
+            infoForm.style.display = 'none';
+            adminButton.style.display = 'inline-block';
 
             adminButton.addEventListener('click', function(e){
-                adminButton.style.display = 'none';
-                infoForm.style.display = 'inline-block';
-
-                view_admin.render();
+                octopus.togglePanel();
             });
 
             var cancelButton = document.getElementById('button-cancel');
             var submitButton = document.getElementById('button-submit');
 
             cancelButton.addEventListener('click', function(e){
-                adminButton.style.display = 'inline-block';
-                infoForm.style.display = 'none';
-
-                view_admin.render();
+                octopus.togglePanel();
             });
 
             submitButton.addEventListener('click', function(e){
@@ -168,7 +186,6 @@ $(function(){
                 var count = document.getElementById('input-count').value;
 
                 octopus.setCatInfo(name, source, count);
-                view_admin.render();
             });
 
             this.render();
@@ -184,9 +201,6 @@ $(function(){
             inputName.value = currentCat.name;
             inputImage.value = currentCat.imgSrc;
             inputCount.value = currentCat.clickCount;
-
-            var infoForm = document.getElementById('info-form');
-            var adminButton = document.getElementById('button-admin');
         }
     };
 
