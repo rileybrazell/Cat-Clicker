@@ -4,6 +4,7 @@
     color: #ffffff;
     border: 3px solid #84888E;
     border-radius: 4px;
+    max-width: 650px;
 }
 
 .header {

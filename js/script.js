@@ -59,6 +59,7 @@ $(function(){
         incrementCounter: function() {
             model.currentCat.clickCount++;
             view_panel.render();
+            view_admin.render();
         },
 
         // Accepts input from form elements, sets the current cat's
