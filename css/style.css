@@ -35,6 +35,11 @@
     text-align: center;
 }
 
+#cat-image {
+    width: 100%;
+    height: auto;
+}
+
 #cat-count{
     font-size: 20pt;
     font-weight: bold;
