@@ -1,6 +1,6 @@
 
 $(function(){
-    // Hold data for cats
+    // Hold data for cats to be fetched by octopus
     var model = {
         currentCat: null,
         cats: [
@@ -54,17 +54,11 @@ $(function(){
             model.currentCat = cat;
         },
 
+        // view_panel.render will refresh the pane with image to
+        // show the incremented counter
         incrementCounter: function() {
             model.currentCat.clickCount++;
             view_panel.render();
-        },
-
-        getCatInfo: function() {
-            var name = model.currentCat.name;
-            var source = model.currentCat.imgSrc;
-            var count = model.current.Cat.clickCount;
-
-            return name, source, count;
         },
 
         // Accepts input from form elements, sets the current cat's
@@ -83,6 +77,7 @@ $(function(){
                 console.log('Count is not a number!');
             }
 
+            // Refreshes panes to show changes
             view_list.render();
             view_panel.render();
             view_admin.render();
@@ -90,22 +85,43 @@ $(function(){
             this.togglePanel();
         },
 
+        // Will check the state of the admin panel, sets it to opposite
+        // state (hidden/visible)
         togglePanel: function() {
             var infoForm = document.getElementById('info-form');
             var adminButton = document.getElementById('button-admin');
 
-            if (infoForm.style.display == 'none'){
-                adminButton.style.display = 'none';
-                infoForm.style.display = 'inline-block';
+            // Checks state of admin button and data form
+            // Toggles between shown and hidden when called 
+            // ((not perfect, isn't really state aware but it works in  ))
+            // ((this app bc it's only called by cancel button and after))
+            // ((form submission                                        ))
+            if (adminButton) {
+                var display = adminButton.style.display;
+
+                if (display == 'none') {
+                    adminButton.style.display = 'inline-block';
+                }
+                else {
+                    adminButton.style.display = 'none';
+                }
             }
-            else if (infoForm.style.display == 'inline-block'){
-                adminButton.style.display = 'inline-block';
-                infoForm.style.display = 'none';
+
+            if (infoForm) {
+                var display = infoForm.style.display;
+
+                if (display == 'none') {
+                    infoForm.style.display = 'inline-block';
+                }
+                else {
+                    infoForm.style.display = 'none';
+                }
             }
         }
     };
 
 
+    // Function for the pane containing list of cats
     var view_list = {
         init: function() {
             this.catListElem = document.getElementById('cat-list');
@@ -124,12 +140,15 @@ $(function(){
                 elem.textContent = cat.name;
                 elem.className += 'cat-list-item';
 
+                // Clicking a cat's name from the list will grab that cat
+                // from the model function, refresh the picture, name, and 
+                // count, pre-fill the admin panel with that info, and toggle
+                // the admin panel
                 elem.addEventListener( 'click', ( function(cat){
                     return function() {
                         octopus.setCurrentCat(cat);
                         view_panel.render();
                         view_admin.render();
-                        octopus.togglePanel();
                     };
                 })(cat));
 
@@ -139,6 +158,7 @@ $(function(){
     };
 
 
+    // Function for the pane with name, picture, and click count
     var view_panel = {
         init: function() {
             this.catPanel = document.getElementById('catPanel');
@@ -153,6 +173,7 @@ $(function(){
             this.render();
         },
 
+        // Get current data from cat object
         render: function() {
             var currentCat = octopus.getCurrentCat();
             this.catName.textContent = currentCat.name;
@@ -161,25 +182,35 @@ $(function(){
         }
     };
 
+
+    // Function for the pane with admin access to change cat information
     var view_admin = {
         init: function() {
             var infoForm = document.getElementById('info-form');
             var adminButton = document.getElementById('button-admin');
-            
+            var cancelButton = document.getElementById('button-cancel');
+            var submitButton = document.getElementById('button-submit');
+
+            // Set the initial styling of the admin panel
+            // (form hidden, button visible)
+            // ((as far as i can tell this is necessary to change them))
+            // ((with octopus functions                               ))
             infoForm.style.display = 'none';
             adminButton.style.display = 'inline-block';
 
+            // Clicking admin button will show the form
             adminButton.addEventListener('click', function(e){
                 octopus.togglePanel();
             });
 
-            var cancelButton = document.getElementById('button-cancel');
-            var submitButton = document.getElementById('button-submit');
-
+            // clicking cancel button on form will hide form and show
+            // admin button
             cancelButton.addEventListener('click', function(e){
                 octopus.togglePanel();
             });
 
+            // submit button will grab the current form content and pass
+            // it up to octopus to change the 
             submitButton.addEventListener('click', function(e){
                 var name = document.getElementById('input-name').value;
                 var source = document.getElementById('input-image').value;
@@ -194,6 +225,7 @@ $(function(){
         render: function() {
             var currentCat = octopus.getCurrentCat();
 
+            // pre-fill admin forms with current cat's data
             var inputName = document.getElementById('input-name');
             var inputImage = document.getElementById('input-image');
             var inputCount = document.getElementById('input-count');
