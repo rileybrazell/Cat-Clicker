@@ -1,6 +1,6 @@
 # Cat Clicker
 
-Single page click tracker written with Javascript. Each cat has a separate click count being tracked. An admin panel can update the stored information about each cat, and even link a remote image file for each cat. For Udacity's Full Stack Web Development course.
+Single page click tracker written with Javascript. Each cat has a separate click count being tracked. An admin panel can update the stored information about each cat, and even link a remote image file for each cat. For Udacity's Full Stack Web Development course. The function 'octopus' is a ViewModel/Controller function orchestrating changes to the model and views.
 
 ## Getting Started
 Clone, or download and unzip, the project folder and open index.html in your favorite browser. Alternatively, access my [hosted project here](http://nondescript-nation.surge.sh) for a live version.
